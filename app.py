@@ -2,7 +2,7 @@ from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate, upgrade
 
-from model import db, seedData
+from model import db, seedData, Customer
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:stefan@localhost/players0101'
@@ -17,7 +17,11 @@ def startpage():
 
 @app.route("/kontakt")
 def contactpage():
-	    return "<html><head><title>Get lost</title></head><body>Leave us alone</body></html>"
+    s = "<html><head><title>Get lost</title></head><body>"
+    for c in Customer.query.all():
+        s = s + c.Name + "<br />"
+    s = s + "</body></html>"
+    return s
 
 if __name__  == "__main__":
     with app.app_context():

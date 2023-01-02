@@ -2,7 +2,7 @@ from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate, upgrade
 
-from model import db
+from model import db, seedData
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:stefan@localhost/players0101'
@@ -14,7 +14,7 @@ if __name__  == "__main__":
     with app.app_context():
         upgrade()
     
-        #seedData(db)
+        seedData(db)
         #app.run()
         while True:
             print("1. Create")

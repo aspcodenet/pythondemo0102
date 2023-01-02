@@ -10,20 +10,29 @@ db.app = app
 db.init_app(app)
 migrate = Migrate(app,db)
 
+@app.route("/")
+def startpage():
+	    return "<h1>test</h1>"
+        # <html><head></head><</html>
+
+@app.route("/kontakt")
+def contactpage():
+	    return "<html><head><title>Get lost</title></head><body>Leave us alone</body></html>"
+
 if __name__  == "__main__":
     with app.app_context():
         upgrade()
     
         seedData(db)
-        #app.run()
-        while True:
-            print("1. Create")
-            print("2. List")        
-            print("3. Exit")                
-            action = input("Ange:")
-            if action == "3":
-                break
-            if action == "1":
-                print("Create")
-            if action == "2":
-                print("List")          
+        app.run()
+        # while True:
+        #     print("1. Create")
+        #     print("2. List")        
+        #     print("3. Exit")                
+        #     action = input("Ange:")
+        #     if action == "3":
+        #         break
+        #     if action == "1":
+        #         print("Create")
+        #     if action == "2":
+        #         print("List")          

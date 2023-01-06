@@ -24,13 +24,23 @@ migrate = Migrate(app,db)
 def startpage():
 	    return render_template("index.html" )
 
-@app.route("/kontakt")
-def contactpage():
-    s = "<html><head><title>Get lost</title></head><body>"
-    for c in Customer.query.all():
-        s = s + c.Name + "<br />"
-    s = s + "</body></html>"
-    return s
+@app.route("/customerimage/<id>")
+def customerimagepage(id):
+    customer = Customer.query.filter_by(Id = id).first()
+    return render_template("customerimage.html", customer=customer )
+
+
+@app.route("/customer/<id>")
+def customerpage(id):
+    customer = Customer.query.filter_by(Id = id).first()
+    return render_template("customer.html", customer=customer )
+
+
+
+@app.route("/customers")
+def customerspage():
+    #listOfCustomers = Customer.query.all()
+    return render_template("customers.html", listOfCustomers=Customer.query.all() )
 
 if __name__  == "__main__":
     with app.app_context():

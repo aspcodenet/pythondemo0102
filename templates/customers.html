@@ -1,0 +1,43 @@
+{% extends "basetemplate.html" %}
+
+{% block title %}
+Alla customers
+{% endblock %}
+
+
+{% block content %}
+
+
+
+<table class="table">
+    <thead>
+        <th>Namn</th>
+        <th>City</th>
+        <th></th>
+        <td></td>
+    </thead>
+    <tbody>
+        {%  for p in listOfCustomers  %}
+        <tr>
+            <td>{{ p.Name }}</td>            
+            <td>{{ p.City }}</td>        
+            <td>
+                <a href="/customer/{{ p.Id }}" class="btn">
+                    Se mer
+                </a>
+            </td>        
+            <td>
+                <a href="/customerimage/{{ p.Id }}">
+                    <img src="https://img.systementor.se/{{ p.Id }}/300/200" />
+                </a>
+            </td>    
+        </tr>
+        {%  endfor  %}
+        </tbody>
+
+</table>
+
+
+{% endblock %}
+
+

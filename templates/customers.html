@@ -7,14 +7,30 @@ Alla customers
 
 {% block content %}
 
-
+Visar sidan {{ page }} av totalt {{ pages }}
 
 <table class="table">
     <thead>
-        <th>Namn</th>
-        <th>City</th>
+        <th>
+            Namn
+            <a href="/customers?sortColumn=namn&sortOrder=asc">
+                <i class='bx bx-up-arrow-alt'></i>
+            </a>
+            <a href="/customers?sortColumn=namn&sortOrder=desc">
+                <i class='bx bx-down-arrow-alt'></i>
+            </a>
+        </th>
+        <th>
+                City
+                <a href="/customers?sortColumn=city&sortOrder=asc">
+                    <i class='bx bx-up-arrow-alt'></i>
+                </a>
+                <a href="/customers?sortColumn=city&sortOrder=desc">
+                    <i class='bx bx-down-arrow-alt'></i>
+                </a>
+            </th>
         <th></th>
-        <td></td>
+        <th></th>
     </thead>
     <tbody>
         {%  for p in listOfCustomers  %}
@@ -34,6 +50,26 @@ Alla customers
         </tr>
         {%  endfor  %}
         </tbody>
+        <tfoot>
+            <tr>
+                  <td>
+                    {% if has_prev %}
+                    <a class="btn" href="/customers?page={{ page - 1 }}&sortColumn={{ sortColumn }}&sortOrder={{ sortOrder }}">
+                        Prev
+                    </a>
+                    {% endif %}
+                  </td>  
+                  <td></td>
+                  <td></td>
+                  <td>
+                    {% if has_next %}
+                    <a class="btn" href="/customers?page={{ page + 1 }}&sortColumn={{ sortColumn }}&sortOrder={{ sortOrder }}">
+                        Next
+                    </a>
+                    {% endif %}
+                  </td>
+            </tr>
+        </tfoot>
 
 </table>
 

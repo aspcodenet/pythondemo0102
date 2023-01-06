@@ -5,14 +5,14 @@ from flask_migrate import Migrate, upgrade
 from model import db, seedData, Customer
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:stefan@localhost/players0101'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:hejsan123@localhost/players0101'
 db.app = app
 db.init_app(app)
 migrate = Migrate(app,db)
 
 @app.route("/")
 def startpage():
-	    return "<h1>test</h1>"
+	    return render_template("index.html" )
         # <html><head></head><</html>
 
 @app.route("/kontakt")

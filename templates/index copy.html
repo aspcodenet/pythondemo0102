@@ -1,0 +1,38 @@
+{% extends "basetemplate.html" %}
+
+{% block title %}
+Product
+{% endblock %}
+
+
+{% block content %}
+
+<ul>
+    {%  for p in playerList  %}
+    <li>{{ p }}</li>
+    {%  endfor  %}
+</ul>
+
+
+<table class="table">
+    <thead>
+        <th>Namn</th>
+        <th>Längd på namnet</th>
+    </thead>
+    <tbody>
+        {%  for p in playerList  %}
+        <tr>
+            <td>{{ p }}</td>            
+            <td>{{ p|length }}</td>            
+        </tr>
+        {%  endfor  %}
+        </tbody>
+
+</table>
+
+
+<a href="{{ url_for('randomnumber') }}" class="btn btn-primary">Till random number</a>
+
+{% endblock %}
+
+

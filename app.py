@@ -37,8 +37,13 @@ def customerspage():
     sortColumn = request.args.get('sortColumn', 'namn')
     sortOrder = request.args.get('sortOrder', 'asc')
     page = int(request.args.get('page', 1))
+    searchWord = request.args.get('q','')
 
     listOfCustomers = Customer.query
+
+    listOfCustomers = listOfCustomers.filter(
+        Customer.Name.like('%' + searchWord + '%') | 
+        Customer.City.like('%' + searchWord + '%' ))
 
     if sortColumn == "namn":
         if sortOrder == "asc":
@@ -60,7 +65,8 @@ def customerspage():
                     sortOrder=sortOrder,
                     has_next = paginationObject.has_next,
                     has_prev = paginationObject.has_prev,
-                    pages=paginationObject.pages )
+                    pages=paginationObject.pages,
+                    q = searchWord)
 
 if __name__  == "__main__":
     with app.app_context():

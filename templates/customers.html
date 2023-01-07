@@ -9,23 +9,28 @@ Alla customers
 
 Visar sidan {{ page }} av totalt {{ pages }}
 
+<form method="get">
+    <input type="text" placeholder="search" value="{{ q }}" name="q">
+    <input class="btn" type=submit value="Sök">
+</form>
+
 <table class="table">
     <thead>
         <th>
             Namn
-            <a href="/customers?sortColumn=namn&sortOrder=asc">
+            <a href="/customers?sortColumn=namn&sortOrder=asc&q={{ q }}">
                 <i class='bx bx-up-arrow-alt'></i>
             </a>
-            <a href="/customers?sortColumn=namn&sortOrder=desc">
+            <a href="/customers?sortColumn=namn&sortOrder=desc&q={{ q }}">
                 <i class='bx bx-down-arrow-alt'></i>
             </a>
         </th>
         <th>
                 City
-                <a href="/customers?sortColumn=city&sortOrder=asc">
+                <a href="/customers?sortColumn=city&sortOrder=asc&q={{ q }}">
                     <i class='bx bx-up-arrow-alt'></i>
                 </a>
-                <a href="/customers?sortColumn=city&sortOrder=desc">
+                <a href="/customers?sortColumn=city&sortOrder=desc&q={{ q }}">
                     <i class='bx bx-down-arrow-alt'></i>
                 </a>
             </th>
@@ -54,7 +59,7 @@ Visar sidan {{ page }} av totalt {{ pages }}
             <tr>
                   <td>
                     {% if has_prev %}
-                    <a class="btn" href="/customers?page={{ page - 1 }}&sortColumn={{ sortColumn }}&sortOrder={{ sortOrder }}">
+                    <a class="btn" href="/customers?page={{ page - 1 }}&sortColumn={{ sortColumn }}&sortOrder={{ sortOrder }}&q={{ q }}">
                         Prev
                     </a>
                     {% endif %}
@@ -63,7 +68,7 @@ Visar sidan {{ page }} av totalt {{ pages }}
                   <td></td>
                   <td>
                     {% if has_next %}
-                    <a class="btn" href="/customers?page={{ page + 1 }}&sortColumn={{ sortColumn }}&sortOrder={{ sortOrder }}">
+                    <a class="btn" href="/customers?page={{ page + 1 }}&sortColumn={{ sortColumn }}&sortOrder={{ sortOrder }}&q={{ q }}">
                         Next
                     </a>
                     {% endif %}

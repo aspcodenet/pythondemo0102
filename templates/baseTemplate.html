@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static',filename='style.css') }}" asp-append-version="true">
+    <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css'  rel='stylesheet'>
+    <title>
+        {% block title %}
+        {% endblock %}
+       </title>
+</head>
+<body>
+    <div class="grid-container">
+        <header class="header">
+            <div class="header__avatar">
+                
+
+            </div>
+          </header>
+          <aside class="sidenav">
+              <div class="sidenav__logo">
+                <i class="bx bxl-c-plus-plus"></i>
+                <span class="sidenav__logo_name">SHAdmin</span>
+              </div>
+              <ul class="sidenav__list">
+                  <li class="sidenav__list-item {{ 'active' if activePage == 'startPage' }}">
+                      <a href="/">
+                          <i class="bx bx-list-ul"></i>
+                          Bla bla</a>
+                  </li>
+
+              </ul>
+          </aside>        
+        <main class="main">
+            {% block content %}
+            {% endblock %}
+        </main>
+        <footer class="footer">
+            {% block footer %}
+                <div class="footer__copyright">&copy; 2021 Systementor AB</div>
+                <div class="footer__signature">Made with love by Stefan Holmberg</div>
+            {% endblock %}
+        </footer>      
+    </div>
+
+
+
+</body>
+</html>

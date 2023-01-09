@@ -5,14 +5,25 @@ from random import randint
 
 from model import db, seedData, Customer
 
+# gör om kontaktsida -> kundlist-sida (/Customers) - dvs byt namn på funktion, byt URL
+# gör om Kundlist-sidan så du har en TEMPLATE (det finns en index copy.html 
+#                  du kan kolla på så ser du ett exempel på loop)
+# Kundlist-sidan ska ha en snygg TABLE
+# Varje kund har en bild den bildens url ska vara https://img.systementor.se/<id>/300/200 - id är kundens id i databasen (numeriskt!)
+# Vid klick på en BILD ska man komma till en Bild-sida
+# På Bild-sidan ska NAMN + bild visas https://img.systementor.se/<id>/800/600
+# I Kundlist-sidans tabell ska det vara en LÄNK -> Kundsida
+# På Kundsidan visas ALL INFORMATION OM KUNDEN samt en bild https://img.systementor.se/<id>/500/400
+
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:stefan@localhost/players0101'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:hejsan123@localhost/players0101'
 db.app = app
 db.init_app(app)
 migrate = Migrate(app,db)
 
 @app.route("/")
 def startpage():
+<<<<<<< HEAD
     dagen = "Måndag"
     siffran = randint(1,6)
    
@@ -26,6 +37,9 @@ def startpage():
 
 	    #return "<h1>test</h1>"
         # <html><head></head><</html>
+=======
+	    return render_template("index.html" )
+>>>>>>> 7fe7d443471caf340a384e5db1aa49875738206f
 
 @app.route("/kontakt")
 def contactpage():

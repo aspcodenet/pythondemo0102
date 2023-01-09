@@ -16,14 +16,13 @@ from model import db, seedData, Customer
 # På Kundsidan visas ALL INFORMATION OM KUNDEN samt en bild https://img.systementor.se/<id>/500/400
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:hejsan123@localhost/players0101'
-db.app = app
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:stefan@localhost/players0101'
+db.app = app 
 db.init_app(app)
 migrate = Migrate(app,db)
 
 @app.route("/")
 def startpage():
-<<<<<<< HEAD
     dagen = "Måndag"
     siffran = randint(1,6)
    
@@ -37,9 +36,13 @@ def startpage():
 
 	    #return "<h1>test</h1>"
         # <html><head></head><</html>
-=======
-	    return render_template("index.html" )
->>>>>>> 7fe7d443471caf340a384e5db1aa49875738206f
+
+@app.route("/customers")
+def customerspage():
+    return render_template("customers.html",
+                            customers=Customer.query.all())
+
+
 
 @app.route("/kontakt")
 def contactpage():

@@ -1,16 +1,29 @@
-<<<<<<< HEAD
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+{% extends "basetemplate.html" %}
+
+{% block title %}
+Välkommen till vår sajt
+{% endblock %}
+
+{% block content %}
     Hej jag heter Stefan
     <p>Idag är det {{ dag }}</p>
+
+
+
     <p>Din tärning blev {{ siffran }}</p>
+    {% if siffran == 1   %}
+    <img src="{{ url_for('static', filename='images/inverted-dice-1.png') }}">
+    {% elif siffran == 2   %}
+    <img src="{{ url_for('static', filename='images/inverted-dice-2.png') }}">
+    {% elif siffran == 3   %}
+    <img src="{{ url_for('static', filename='images/inverted-dice-3.png') }}">
+    {% elif siffran == 4   %}
+    <img src="{{ url_for('static', filename='images/inverted-dice-4.png') }}">
+    {% elif siffran == 5   %}
+    <img src="{{ url_for('static', filename='images/inverted-dice-5.png') }}">
+    {% elif siffran == 6   %}
+    <img src="{{ url_for('static', filename='images/inverted-dice-6.png') }}">
+   {%  endif  %}
 
     {% if siffran > 3   %}
         <p>Du har vunnit ett pris</p>
@@ -26,26 +39,7 @@
                 {{ c.City }}
             </td>
         </tr>
+    
     {% endfor %}
-    </table>
-
-</body>
-</html>
-=======
-{% extends "basetemplate.html" %}
-
-{% block title %}
-Startsidan
-{% endblock %}
-
-
-{% block content %}
-
-<h1>Welcome</h1>
-<p>Coola sajten</p>
-
-
-{% endblock %}
-
-
->>>>>>> 7fe7d443471caf340a384e5db1aa49875738206f
+</table>
+    {% endblock %}    

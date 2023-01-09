@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate, upgrade
+from random import randint
 
 from model import db, seedData, Customer
 
@@ -12,7 +13,18 @@ migrate = Migrate(app,db)
 
 @app.route("/")
 def startpage():
-	    return "<h1>test</h1>"
+    dagen = "Måndag"
+    siffran = randint(1,6)
+   
+
+    html = render_template("index.html", 
+                            dag=dagen,
+                            siffran=siffran,
+                            customers=Customer.query.all()
+    )
+    return html
+
+	    #return "<h1>test</h1>"
         # <html><head></head><</html>
 
 @app.route("/kontakt")

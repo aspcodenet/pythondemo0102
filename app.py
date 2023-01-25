@@ -47,6 +47,20 @@ def customerspage():
                             customers=Customer.query.all())
 
 
+@app.route("/editcustomer/<int:id>", methods=['GET', 'POST'])
+def editcustomer(id):
+    customer = Customer.query.filter_by(Id=id).first()
+    form = NewCustomerForm()
+    if form.validate_on_submit():
+        #spara i databas
+        customer.Name = form.name.data
+        customer.City = form.city.data
+        db.session.commit()
+        return redirect("/customers" )
+    if request.method == 'GET':
+        form.name .data = customer.Name
+        form.city.data = customer.City
+    return render_template("editcustomer.html", formen=form )
 
 
 @app.route("/newcustomer", methods=['GET', 'POST'])
@@ -54,6 +68,13 @@ def newcustomer():
     form = NewCustomerForm()
     if form.validate_on_submit():
         #spara i databas
+        customer = Customer()
+        customer.Name = form.name.data
+        customer.City = form.city.data
+        customer.TelephoneCountryCode = 1
+        customer.Telephone = "321323"
+        db.session.add(customer)
+        db.session.commit()
         return redirect("/customers" )
     return render_template("newcustomer.html", formen=form )
     

@@ -5,7 +5,16 @@ Alla kunder
 {% endblock %}
 
 {% block content %}
-    <table>
+
+<h1>Customers</h1>
+<a href="/newcustomer" class="btn">New</a>
+
+<table class="table">
+    <th>
+        <td>Namn</td>
+        <td>City</td>
+        <td></td>
+    </th>
     {% for c in customers  %}
         <tr>
             <td>
@@ -13,6 +22,11 @@ Alla kunder
             </td>
             <td>
                 {{ c.City }}
+            </td>
+            <td>
+                <a href="/editcustomer?id={{ c.Id }}">
+                    <i class='bx bx-edit-alt'></i>
+                </a>
             </td>
         </tr>
     

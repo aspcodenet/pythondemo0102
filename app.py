@@ -1,10 +1,12 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate, upgrade
 from random import randint
 
 from model import db, seedData, Customer
 
+from forms import NewCustomerForm
+import os
 # gör om kontaktsida -> kundlist-sida (/Customers) - dvs byt namn på funktion, byt URL
 # gör om Kundlist-sidan så du har en TEMPLATE (det finns en index copy.html 
 #                  du kan kolla på så ser du ett exempel på loop)
@@ -17,9 +19,11 @@ from model import db, seedData, Customer
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:stefan@localhost/players0101'
+app.config['SECRET_KEY'] = os.urandom(32)
 db.app = app 
 db.init_app(app)
 migrate = Migrate(app,db)
+
 
 @app.route("/")
 def startpage():
@@ -43,6 +47,16 @@ def customerspage():
                             customers=Customer.query.all())
 
 
+
+
+@app.route("/newcustomer", methods=['GET', 'POST'])
+def newcustomer():
+    form = NewCustomerForm()
+    if form.validate_on_submit():
+        #spara i databas
+        return redirect("/customers" )
+    return render_template("newcustomer.html", formen=form )
+    
 
 @app.route("/kontakt")
 def contactpage():

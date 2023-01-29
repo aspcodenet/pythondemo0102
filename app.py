@@ -1,19 +1,29 @@
 from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate, upgrade
+import os
 
 from model import db, seedData, Customer
 
-# active page
-# Sorting
-# paging
+# Admins ska kunna se allt!
+# Staff ska se Customers, Customer page
+
 
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:hejsan123@localhost/players0101'
+app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY", 'pf9Wkove4IKEAXvy-cQkeDPhv9Cb3Ag-wyJILbq_dFw')
+app.config['SECURITY_PASSWORD_SALT'] = os.environ.get("SECURITY_PASSWORD_SALT", '146585145368132386173505678016728509634')
+app.config["REMEMBER_COOKIE_SAMESITE"] = "strict"
+app.config["SESSION_COOKIE_SAMESITE"] = "strict"
+
+
 db.app = app
 db.init_app(app)
 migrate = Migrate(app,db)
+
+
+
 
 @app.route("/")
 def startpage():
@@ -30,6 +40,9 @@ def customerpage(id):
     customer = Customer.query.filter_by(Id = id).first()
     return render_template("customer.html", customer=customer, activePage="customersPage" )
 
+@app.route("/adminblabla")
+def adminblblapage():
+    return render_template("adminblabla.html", activePage="secretPage" )
 
 
 @app.route("/customers")
@@ -72,8 +85,8 @@ if __name__  == "__main__":
     with app.app_context():
         upgrade()
     
-        seedData(db)
-        app.run()
+        seedData(app, db)
+        app.run(debug=True)
         # while True:
         #     print("1. Create")
         #     print("2. List")        

@@ -1,8 +1,8 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate, upgrade
 import os
-
+from flask_security import roles_accepted, auth_required, logout_user
 from model import db, seedData, Customer
 
 # Admins ska kunna se allt!
@@ -29,6 +29,14 @@ migrate = Migrate(app,db)
 def startpage():
 	    return render_template("index.html", activePage="startPage" )
 
+@app.route("/logout")
+def logout():
+    logout_user()
+    return redirect("/")
+
+
+
+
 @app.route("/customerimage/<id>")
 def customerimagepage(id):
     customer = Customer.query.filter_by(Id = id).first()
@@ -36,16 +44,22 @@ def customerimagepage(id):
 
 
 @app.route("/customer/<id>")
+@auth_required()
+@roles_accepted("Admin","Staff")
 def customerpage(id):
     customer = Customer.query.filter_by(Id = id).first()
     return render_template("customer.html", customer=customer, activePage="customersPage" )
 
 @app.route("/adminblabla")
+@auth_required()
+@roles_accepted("Admin")
 def adminblblapage():
     return render_template("adminblabla.html", activePage="secretPage" )
 
 
 @app.route("/customers")
+@auth_required()
+@roles_accepted("Admin","Staff")
 def customerspage():
     sortColumn = request.args.get('sortColumn', 'namn')
     sortOrder = request.args.get('sortOrder', 'asc')

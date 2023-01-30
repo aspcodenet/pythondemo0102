@@ -48,6 +48,17 @@
                         Whatever link</a>
                 </li>
 
+                {{ current_user.email }}  
+                
+                {% if current_user.is_authenticated %}
+                <li class="sidenav__list-item {{ 'active' if activePage == 'secretPage' }}">
+                    <a href="/logout">
+                        <i class="bx bx-list-ul"></i>
+                        Logout</a>
+                </li>
+                {% endif %}
+
+
 
               </ul>
           </aside>        

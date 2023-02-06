@@ -6,7 +6,7 @@ from model import db, Customer
 from sqlalchemy import create_engine
 
 
-class PersonerTestCases(unittest.TestCase):
+class FormsTestCases(unittest.TestCase):
     def __init__(self, *args, **kwargs):
         super(PersonerTestCases, self).__init__(*args, **kwargs)
         self.ctx = app.app_context()

@@ -18,13 +18,9 @@ class FormsTestCases(unittest.TestCase):
         app.config['TESTING'] = True
         app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://'
 
-       # engine = create_engine('sqlite:///:memory:')
-        # db.session.configure(bind=engine)
         db.init_app(app)
         db.app = app
-        #db.execute("ATTACH DATABASE ':memory:' AS authentication")
         db.create_all()
-        #db.model.metadata.create_all(engine)
 
     def tearDown(self):
         #self.ctx.pop()

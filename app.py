@@ -4,6 +4,7 @@ from flask_migrate import Migrate, upgrade
 from random import randint
 
 from model import db, seedData, Customer
+from person import PersonRegister, Person
 
 from forms import NewCustomerForm
 import os
@@ -18,7 +19,7 @@ import os
 # På Kundsidan visas ALL INFORMATION OM KUNDEN samt en bild https://img.systementor.se/<id>/500/400
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:stefan@localhost/players0101'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:hejsan123@localhost/players0101'
 app.config['SECRET_KEY'] = os.urandom(32)
 db.app = app 
 db.init_app(app)
@@ -27,6 +28,9 @@ migrate = Migrate(app,db)
 
 @app.route("/")
 def startpage():
+
+
+
     dagen = "Måndag"
     siffran = randint(1,6)
    
@@ -51,6 +55,9 @@ def customerspage():
 def editcustomer(id):
     customer = Customer.query.filter_by(Id=id).first()
     form = NewCustomerForm()
+
+    form.name.errors = form.name.errors + ('dasdasdas',)
+
     if form.validate_on_submit():
         #spara i databas
         customer.Name = form.name.data

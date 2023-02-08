@@ -10,11 +10,12 @@ Alla kunder
 <a href="/newcustomer" class="btn">New</a>
 
 <table class="table">
-    <th>
+    <tr>
         <td>Namn</td>
         <td>City</td>
-        <td></td>
-    </th>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+    </tr>
     {% for c in customers  %}
         <tr>
             <td>
@@ -28,6 +29,11 @@ Alla kunder
                     <i class='bx bx-edit-alt'></i>
                 </a>
             </td>
+            <td>
+                <a href="/withdraw/{{ c.Id }}">
+                    <i class='bx bx-money-withdraw'></i>
+                </a>
+            </td>            
         </tr>
     
     {% endfor %}

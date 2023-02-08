@@ -55,8 +55,8 @@ def customerspage():
 def editcustomer(id):
     customer = Customer.query.filter_by(Id=id).first()
     form = NewCustomerForm()
-    if customer.Belopp < form.Belopp:        
-        form.Belopp.errors = form.Belopp.errors + ('Belopp to large',)
+    # if customer.Belopp < form.Belopp:        
+    #     form.Belopp.errors = form.Belopp.errors + ('Belopp to large',)
 
 
     if form.validate_on_submit():

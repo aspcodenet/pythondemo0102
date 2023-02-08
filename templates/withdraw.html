@@ -1,0 +1,25 @@
+{% extends "basetemplate.html" %}
+
+{% block title %}
+Withdraw
+{% endblock %}
+
+{% block content %}
+
+    {% for field, errors in formen.errors.items() %}
+    {{ formen[field].label }}: {{ ', '.join(errors) }}
+    </br>
+    {% endfor %}
+
+
+    <h1>Ta ut från {{ customer.Name }}</h1>
+
+   <form method="post">
+    {{ formen.csrf_token }}
+    
+      {{ formen.amount(placeholder="Belopp") }}
+
+   
+    <input type="submit" value="Spara">
+   </form>
+{% endblock %}    

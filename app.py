@@ -6,7 +6,7 @@ from random import randint
 from model import db, seedData, Customer
 from person import PersonRegister, Person
 
-from forms import NewCustomerForm
+from forms import NewCustomerForm, WithdrawForm
 import os
 # gör om kontaktsida -> kundlist-sida (/Customers) - dvs byt namn på funktion, byt URL
 # gör om Kundlist-sidan så du har en TEMPLATE (det finns en index copy.html 
@@ -19,7 +19,7 @@ import os
 # På Kundsidan visas ALL INFORMATION OM KUNDEN samt en bild https://img.systementor.se/<id>/500/400
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:hejsan123@localhost/players0101'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:hejsan123@localhost/players01022'
 app.config['SECRET_KEY'] = os.urandom(32)
 db.app = app 
 db.init_app(app)
@@ -49,6 +49,32 @@ def startpage():
 def customerspage():
     return render_template("customers.html",
                             customers=Customer.query.all())
+
+
+@app.route("/withdraw/<int:id>", methods=['GET', 'POST'])
+def withdraw(id):
+    customer = Customer.query.filter_by(Id=id).first()
+    form = WithdrawForm()
+
+    ownValidationOk = True
+    if request.method == 'POST':
+        # todo Lägg till validering mot databas 
+        # if form.amount.data > customer.amount 
+        # GENERERA FEL
+        form.amount.errors = form.amount.errors + ('Belopp to large',)
+        ownValidationOk = False
+
+
+    if ownValidationOk and form.validate_on_submit():
+        customer.Amount = customer.Amount - form.amount.data
+        # insert into transactions
+        db.session.commit()
+
+        # todo ändra i databasen
+        #return redirect("/customer/" + str(id))
+        return redirect("/customers")
+    return render_template("withdraw.html", formen=form, customer=customer )
+
 
 
 @app.route("/editcustomer/<int:id>", methods=['GET', 'POST'])
@@ -81,6 +107,7 @@ def newcustomer():
         customer.City = form.city.data
         customer.TelephoneCountryCode = 1
         customer.Telephone = "321323"
+        customer.Amount = 0
         db.session.add(customer)
         db.session.commit()
         return redirect("/customers" )
@@ -100,7 +127,7 @@ if __name__  == "__main__":
         upgrade()
     
         seedData(db)
-        app.run()
+        app.run(debug=True)
         # while True:
         #     print("1. Create")
         #     print("2. List")        

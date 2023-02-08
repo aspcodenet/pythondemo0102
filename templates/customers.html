@@ -13,6 +13,7 @@ Alla kunder
     <tr>
         <td>Namn</td>
         <td>City</td>
+        <td>Amount</td>
         <td>&nbsp;</td>
         <td>&nbsp;</td>
     </tr>
@@ -23,6 +24,9 @@ Alla kunder
             </td>
             <td>
                 {{ c.City }}
+            </td>
+            <td>
+                {{ c.Amount }}
             </td>
             <td>
                 <a href="/editcustomer/{{ c.Id }}">

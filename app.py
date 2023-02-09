@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate, upgrade
 from random import randint
+from flask_security import roles_accepted, auth_required, logout_user
 
 from model import db, seedData, Customer
 from person import PersonRegister, Person
@@ -19,8 +20,9 @@ import os
 # På Kundsidan visas ALL INFORMATION OM KUNDEN samt en bild https://img.systementor.se/<id>/500/400
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:hejsan123@localhost/players01022'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:hejsa312312132321n13123@localhost/players01022'
 app.config['SECRET_KEY'] = os.urandom(32)
+app.config['SECURITY_PASSWORD_SALT'] = os.environ.get("SECURITY_PASSWORD_SALT", '146585145368132386173505678016728509634')
 db.app = app 
 db.init_app(app)
 migrate = Migrate(app,db)
@@ -50,8 +52,9 @@ def customerspage():
     return render_template("customers.html",
                             customers=Customer.query.all())
 
-
 @app.route("/withdraw/<int:id>", methods=['GET', 'POST'])
+@auth_required()
+@roles_accepted("Admin","Staff")
 def withdraw(id):
     customer = Customer.query.filter_by(Id=id).first()
     form = WithdrawForm()
@@ -126,7 +129,7 @@ if __name__  == "__main__":
     with app.app_context():
         upgrade()
     
-        seedData(db)
+        seedData(app,db)
         app.run(debug=True)
         # while True:
         #     print("1. Create")

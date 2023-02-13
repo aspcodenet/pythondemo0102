@@ -10,11 +10,13 @@ Alla kunder
 <a href="/newcustomer" class="btn">New</a>
 
 <table class="table">
-    <th>
+    <tr>
         <td>Namn</td>
         <td>City</td>
-        <td></td>
-    </th>
+        <td>Amount</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+    </tr>
     {% for c in customers  %}
         <tr>
             <td>
@@ -24,10 +26,18 @@ Alla kunder
                 {{ c.City }}
             </td>
             <td>
+                {{ c.Amount }}
+            </td>
+            <td>
                 <a href="/editcustomer/{{ c.Id }}">
                     <i class='bx bx-edit-alt'></i>
                 </a>
             </td>
+            <td>
+                <a href="/withdraw/{{ c.Id }}">
+                    <i class='bx bx-money-withdraw'></i>
+                </a>
+            </td>            
         </tr>
     
     {% endfor %}

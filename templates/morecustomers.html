@@ -1,0 +1,49 @@
+{% extends "basetemplate.html" %}
+
+{% block title %}
+Alla kunder
+{% endblock %}
+
+{% block content %}
+
+<h1>Customers</h1>
+<a href="/newcustomer" class="btn">New</a>
+
+<table class="table" id="posts-table">
+    <thead>
+        <tr>
+            <td>Namn</td>
+            <td>City</td>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+<a class="btn" href="javascript:fetchMore()">10 more</a>
+<script>
+    pageNo = 1;
+    function fetchMore() {
+        fetch("/api/customers?page=" + pageNo)
+            .then((response) => response.json())
+            .then((json) => {
+                    pageNo = pageNo + 1;
+                    json.forEach(tableElements);
+                }
+            );
+    }
+
+    function tableElements(element) {
+            document.querySelector('#posts-table tbody').innerHTML +=
+                `<tr>
+        <td>${element.Name}</td>
+        <td>${element.City}</td>
+    </tr>`;
+        }
+        document.addEventListener("DOMContentLoaded", function () {
+            fetchMore();
+        });
+
+</script>
+
+{% endblock %}    

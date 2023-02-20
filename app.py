@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect,jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate, upgrade
 from random import randint
@@ -20,13 +20,27 @@ import os
 # På Kundsidan visas ALL INFORMATION OM KUNDEN samt en bild https://img.systementor.se/<id>/500/400
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:hejsa312312132321n13123@localhost/players01022'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:hejsan123@localhost/players01022'
 app.config['SECRET_KEY'] = os.urandom(32)
 app.config['SECURITY_PASSWORD_SALT'] = os.environ.get("SECURITY_PASSWORD_SALT", '146585145368132386173505678016728509634')
 db.app = app 
 db.init_app(app)
 migrate = Migrate(app,db)
 
+
+@app.route("/api/customers")
+def customers():
+    customers=[]
+    page = int(request.args.get('page',1))
+    custs = Customer.query.order_by(Customer.Id.desc()).paginate(page=page,per_page=10    )
+    for cust in custs.items:
+        c = { "Id": cust.Id,"Name":cust.Name, "City":cust.City }
+        customers.append(c)
+    return jsonify(customers)
+
+@app.route("/morecustomers")
+def morecustomerspage():
+    return render_template("morecustomers.html")
 
 @app.route("/")
 def startpage():

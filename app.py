@@ -67,8 +67,8 @@ def customerspage():
                             customers=Customer.query.all())
 
 @app.route("/withdraw/<int:id>", methods=['GET', 'POST'])
-@auth_required()
-@roles_accepted("Admin","Staff")
+# @auth_required()
+# @roles_accepted("Admin","Staff")
 def withdraw(id):
     customer = Customer.query.filter_by(Id=id).first()
     form = WithdrawForm()

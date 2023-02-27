@@ -58,11 +58,11 @@ class FormsTestCases(unittest.TestCase):
         # ta ut 200
         # kolla i rerultat HTML = "Belopp to large"
 
-        app.security.datastore.create_role(name="Admin")
-        app.security.datastore.create_user(email="unittest@me.com", password=hash_password("password"), roles=["Admin"])
-        app.security.datastore.commit()
+        # app.security.datastore.create_role(name="Admin")
+        # app.security.datastore.create_user(email="unittest@me.com", password=hash_password("password"), roles=["Admin"])
+        # app.security.datastore.commit()
 
-        set_current_user(app, app.security.datastore, "unittest@me.com")
+        # set_current_user(app, app.security.datastore, "unittest@me.com")
 
 
         customer = Customer()
@@ -78,7 +78,7 @@ class FormsTestCases(unittest.TestCase):
         user = User.query.get(1)
         with test_client:
             url = '/withdraw/' + str(customer.Id)
-            response = test_client.post(url, data={ "amount":"200"},  headers={app.config["SECURITY_TOKEN_AUTHENTICATION_HEADER"]: "token"} )
+            response = test_client.post(url, data={ "amount":"200"})
             s = response.data.decode("utf-8") 
             ok = 'Belopp to large' in s
             self.assertTrue(ok)
